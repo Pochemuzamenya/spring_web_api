@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tickets")
+@Table(name = "ticket_table")
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String essenceOfContact;
@@ -31,16 +31,12 @@ public class Ticket {
     @CreationTimestamp
     private LocalDateTime date = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id")
     private Manager manager;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Client client;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
 
 }

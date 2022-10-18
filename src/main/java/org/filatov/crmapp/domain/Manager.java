@@ -17,11 +17,11 @@ import static javax.persistence.CascadeType.REFRESH;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "managers")
+@Table(name = "manager_table")
 public class Manager {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

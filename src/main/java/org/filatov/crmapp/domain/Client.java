@@ -6,22 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="clients")
+@Table(name="client_table")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -32,34 +27,26 @@ public class Client {
 
     private String bankDetails;
 
-    private String deliveryAddress;
+    private String clientAddress;
 
     private String comment;
 
-    @Builder.Default
-    @ManyToMany(cascade = {
-            DETACH,MERGE,PERSIST,REFRESH
-    }, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "client_contact",
-            joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id")
-    )
-    private Set<Contact> contactPersons = new HashSet<>(); //Представители компании
+    private String contactName;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private String contactType;
+
+    private String region;
 
     private String contactPersonPosition;
+
+    private String takeFrom;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="manager_id")
     private Manager manager;
 
-    public void addContact(Contact contact) {
-        this.contactPersons.add(contact);
-        contact.getClients().add(this);
-    }
-
-    public void removeContact(Contact contact) {
-        this.contactPersons.remove(contact);
-        contact.getClients().remove(this);
-    }
 }
