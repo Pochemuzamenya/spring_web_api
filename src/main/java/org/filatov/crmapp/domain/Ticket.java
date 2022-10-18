@@ -36,7 +36,7 @@ public class Ticket {
     private Manager manager;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
 }
