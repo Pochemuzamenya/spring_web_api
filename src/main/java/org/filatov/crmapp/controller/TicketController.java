@@ -15,7 +15,7 @@ public class TicketController {
 
     private final DBService<Ticket> service;
 
-    @GetMapping("/all")
+    @GetMapping
     public Flux<Ticket> getAll() {
         return service.findAll();
     }
@@ -25,7 +25,7 @@ public class TicketController {
         return service.save(ticket);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public Mono<Ticket> update(@RequestBody Ticket ticket) {
         return service.update(ticket);
     }

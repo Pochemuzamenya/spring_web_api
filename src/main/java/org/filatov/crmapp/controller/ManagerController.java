@@ -15,7 +15,7 @@ public class ManagerController {
 
     private final DBService<Manager> service;
 
-    @GetMapping("/all")
+    @GetMapping
     public Flux<Manager> getAll() {
         return service.findAll();
     }
@@ -25,7 +25,7 @@ public class ManagerController {
         return service.save(manager);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public Mono<Manager> update(@RequestBody Manager manager) {
         return service.update(manager);
     }

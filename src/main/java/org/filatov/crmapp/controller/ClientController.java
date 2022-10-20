@@ -15,7 +15,7 @@ public class ClientController {
 
     private final DBService<Client> service;
 
-    @GetMapping("/all")
+    @GetMapping
     public Flux<Client> getAll() {
         return service.findAll();
     }
@@ -25,7 +25,7 @@ public class ClientController {
         return service.save(client);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public Mono<Client> update(@RequestBody Client client) {
         return service.update(client);
     }

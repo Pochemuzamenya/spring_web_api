@@ -23,27 +23,17 @@ public class Client {
 
     private String taxIdentificationNumber; //ИНН
 
-    private String headInformation; //Сведения о руководителе
-
-    private String bankDetails;
-
     private String clientAddress;
-
-    private String comment;
-
-    private String contactName;
 
     private String email;
 
     private String phoneNumber;
 
-    private String contactType;
+    private String comment;
+
+    private String contactName;
 
     private String region;
-
-    private String contactPersonPosition;
-
-    private String takeFrom;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="manager_id")
