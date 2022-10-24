@@ -1,16 +1,17 @@
 package org.filatov.crmapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.REFRESH;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +19,7 @@ import static javax.persistence.CascadeType.REFRESH;
 @Builder
 @Entity
 @Table(name = "manager_table")
-public class Manager {
+public class Manager implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +27,36 @@ public class Manager {
 
     private String name;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "manager", cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
-    private Set<Client> clients = new HashSet<>();
+    private String username;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "manager", cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
-    private Set<Ticket> tickets = new HashSet<>();
+    @JsonIgnore
+    private String password;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

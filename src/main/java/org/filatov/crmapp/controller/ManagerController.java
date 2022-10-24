@@ -20,17 +20,17 @@ public class ManagerController {
         return service.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Mono<Manager> create(@RequestBody Manager manager) {
         return service.save(manager);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public Mono<Manager> update(@RequestBody Manager manager) {
         return service.update(manager);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public Mono<Manager> delete(@PathVariable Long id) {
         return service.delete(id);
     }
