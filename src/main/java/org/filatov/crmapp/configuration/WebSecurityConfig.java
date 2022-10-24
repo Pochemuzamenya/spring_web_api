@@ -1,5 +1,6 @@
 package org.filatov.crmapp.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -10,7 +11,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
+
+    private final AuthenticationManager authenticationManager;
+
+    private final SecurityContextRepository securityContextRepository;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
@@ -18,9 +24,11 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .authenticationManager(authenticationManager)
+                .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers("/", "/login", "/favicon.ico").permitAll()
-                .pathMatchers("/api/manager").hasRole("ADMIN")
+                .pathMatchers("/**", "/login", "/favicon.ico").permitAll()
+                .pathMatchers("/api/manager", "/api/manager/create", "/api/manager/update", "/api/manager/delete").hasRole("ADMIN")
                 .anyExchange().authenticated()
                 .and()
                 .build();
