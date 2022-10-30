@@ -13,29 +13,24 @@ import reactor.core.scheduler.Schedulers;
 public class TaskService implements DBService<Task> {
 
     private final TaskRepository repo;
+
     @Override
     public Mono<Task> save(Task task) {
-        return Mono.fromCallable(
-                        () -> repo.save(task)
-                )
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.save(task);
     }
 
     @Override
     public Flux<Task> findAll() {
-        return Flux.defer(() -> Flux.fromIterable(repo.findAll())).subscribeOn(Schedulers.boundedElastic());
+        return repo.findAll();
     }
 
     @Override
     public Mono<Task> update(Task task) {
-        return Mono.fromCallable(
-                () -> repo.save(task)
-        ).subscribeOn(Schedulers.boundedElastic());
+        return repo.save(task);
     }
 
     @Override
-    public Mono<Task> delete(Long id) {
-        repo.deleteById(id);
-        return Mono.empty();
+    public Mono<Void> delete(Long id) {
+        return repo.deleteById(id);
     }
 }

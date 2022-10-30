@@ -31,7 +31,7 @@ public class TicketController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<Ticket> delete(@PathVariable Long id) {
+    public Mono<Void> delete(@PathVariable Long id) {
         return service.delete(id);
     }
 }

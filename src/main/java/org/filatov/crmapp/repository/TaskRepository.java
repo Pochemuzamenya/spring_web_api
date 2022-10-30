@@ -1,7 +1,7 @@
 package org.filatov.crmapp.repository;
 
 import org.filatov.crmapp.domain.Task;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.reactive.ReactiveSortingRepository;
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface TaskRepository extends ReactiveSortingRepository<Task, Long> {
 }

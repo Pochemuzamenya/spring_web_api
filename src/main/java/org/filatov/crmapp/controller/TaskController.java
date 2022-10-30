@@ -31,7 +31,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<Task> delete(@PathVariable Long id) {
+    public Mono<Void> delete(@PathVariable Long id) {
         return service.delete(id);
     }
 }

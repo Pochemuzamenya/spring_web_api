@@ -16,13 +16,7 @@ public class UserService implements ReactiveUserDetailsService {
     private final UserRepository repo;
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return Mono.fromCallable(
-                        () -> repo.findByUsername(username)
-                ).subscribeOn(Schedulers.boundedElastic())
+        return repo.findByUsername(username)
                 .cast(UserDetails.class);
-    }
-
-    public Mono<Manager> find(String username) {
-        return Mono.fromCallable(() -> repo.findManagerByUsername(username)).subscribeOn(Schedulers.boundedElastic());
     }
 }

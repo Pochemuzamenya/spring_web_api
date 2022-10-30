@@ -2,12 +2,11 @@ package org.filatov.crmapp.repository;
 
 import org.filatov.crmapp.domain.Client;
 import org.filatov.crmapp.domain.Ticket;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.reactive.ReactiveSortingRepository;
+import reactor.core.publisher.Flux;
 
-import java.util.List;
+public interface TicketRepository extends ReactiveSortingRepository<Ticket, Long> {
+    Flux<Ticket> findAllByClient(Client client);
 
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    List<Ticket> findAllByClient(Client client);
-
-    List<Ticket> findAllByClientId(Long id);
+    Flux<Ticket> findAllByClientId(Long id);
 }

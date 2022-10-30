@@ -16,28 +16,21 @@ public class ClientService implements DBService<Client> {
 
     @Override
     public Mono<Client> save(Client client) {
-        return Mono.fromCallable(
-                () -> repo.save(client)
-                )
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.save(client);
     }
 
     @Override
     public Flux<Client> findAll() {
-        return Flux.fromIterable(repo.findAll())
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.findAll();
     }
 
     @Override
     public Mono<Client> update(Client client) {
-        return Mono.fromCallable(
-                ()->repo.save(client)
-        ).subscribeOn(Schedulers.boundedElastic());
+        return repo.save(client);
     }
 
     @Override
-    public Mono<Client> delete(Long id) {
-        repo.deleteById(id);
-        return Mono.empty();
+    public Mono<Void> delete(Long id) {
+        return repo.deleteById(id);
     }
 }

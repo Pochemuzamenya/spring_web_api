@@ -19,42 +19,29 @@ public class TicketService implements DBService<Ticket> {
 
     @Override
     public Mono<Ticket> save(Ticket ticket) {
-        return Mono.fromCallable(
-                        () -> repo.save(ticket)
-                )
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.save(ticket);
     }
 
     @Override
     public Flux<Ticket> findAll() {
-        return Flux.fromIterable(repo.findAll())
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.findAll();
     }
 
     @Override
     public Mono<Ticket> update(Ticket ticket) {
-        return Mono.fromCallable(
-                        () -> repo.save(ticket)
-                )
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.save(ticket);
     }
 
     @Override
-    public Mono<Ticket> delete(Long id) {
-        repo.deleteById(id);
-        return Mono.empty();
+    public Mono<Void> delete(Long id) {
+        return repo.deleteById(id);
     }
 
     public Flux<Ticket> findByClient(Client client) {
-
-        List<Ticket> allByClient = repo.findAllByClient(client);
-        System.out.println(allByClient);
-        return Flux.fromIterable(allByClient);
+        return repo.findAllByClient(client);
     }
 
     public Flux<Ticket> findByClientId(Long id) {
-        List<Ticket> all = repo.findAllByClientId(id);
-        System.out.println(all);
-        return Flux.fromIterable(all);
+        return repo.findAllByClientId(id);
     }
 }

@@ -6,7 +6,6 @@ import org.filatov.crmapp.repository.ManagerRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Service
 @RequiredArgsConstructor
@@ -16,28 +15,23 @@ public class ManagerService implements DBService<Manager> {
 
     @Override
     public Mono<Manager> save(Manager manager) {
-        return Mono.fromCallable(
-                () -> repo.save(manager)
-                )
-                .subscribeOn(Schedulers.boundedElastic());
+        return repo.save(manager);
     }
 
     @Override
     public Flux<Manager> findAll() {
-        return Flux.defer(() -> Flux.fromIterable(repo.findAll())).subscribeOn(Schedulers.boundedElastic());
+        return repo.findAll();
     }
 
     @Override
     public Mono<Manager> update(Manager manager) {
-        return Mono.fromCallable(
-                () -> repo.save(manager)
-        ).subscribeOn(Schedulers.boundedElastic());
+        return repo.save(manager);
     }
 
+
     @Override
-    public Mono<Manager> delete(Long id) {
-        repo.deleteById(id);
-        return Mono.empty();
+    public Mono<Void> delete(Long id) {
+        return repo.deleteById(id);
     }
 
 }
