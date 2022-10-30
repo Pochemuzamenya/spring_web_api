@@ -1,5 +1,6 @@
 package org.filatov.crmapp.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,20 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@RequiredArgsConstructor
 public class ReactiveWebSocketConfig {
 
-    @Autowired
-    @Qualifier("ReactiveWebSocketHandler")
-    private WebSocketHandler webSocketHandler;
+    //private final WebSocketHandler reactiveWebSocketHandler;
+
+    private final WebSocketHandler taskHandler;
     @Bean
     public HandlerMapping webSocketHandlerMapping() {
         Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/event-emitter", webSocketHandler);
+       // map.put("/ws/client", reactiveWebSocketHandler);
+        map.put("/ws/task", taskHandler);
 
-        SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
-        handlerMapping.setOrder(1);
-        handlerMapping.setUrlMap(map);
-        return handlerMapping;
+        return new SimpleUrlHandlerMapping(map, -1);
     }
 
     @Bean
