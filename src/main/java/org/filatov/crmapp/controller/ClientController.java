@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("/api/client")
 @RestController
-@CrossOrigin
 public class ClientController {
 
     private final DBService<Client> service;

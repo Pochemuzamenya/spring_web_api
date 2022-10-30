@@ -41,9 +41,9 @@ public class WebSecurityConfig {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers( "/login", "/favicon.ico").permitAll()
-                .pathMatchers("/api/manager", "/api/manager/create", "/api/manager/update", "/api/manager/delete").hasRole("ADMIN")
-                .pathMatchers("/api/client", "/api/task", "/api/ticket").hasRole("USER")
+                .pathMatchers(  "/**", "/login", "/favicon.ico").permitAll()
+                //.pathMatchers("/**").hasRole("USER")
+                //.pathMatchers("/api/manager", "/api/manager/create", "/api/manager/update", "/api/manager/delete").hasRole("ADMIN")
                 .anyExchange().authenticated()
                 .and()
                 .build();

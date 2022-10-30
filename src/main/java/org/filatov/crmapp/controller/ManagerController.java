@@ -1,7 +1,9 @@
 package org.filatov.crmapp.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.filatov.crmapp.domain.Manager;
+import org.filatov.crmapp.domain.view.Views;
 import org.filatov.crmapp.service.DBService;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -16,6 +18,7 @@ public class ManagerController {
     private final DBService<Manager> service;
 
     @GetMapping
+    @JsonView(Views.IdName.class)
     public Flux<Manager> getAll() {
         return service.findAll();
     }
