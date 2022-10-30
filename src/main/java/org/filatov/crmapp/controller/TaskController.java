@@ -1,7 +1,6 @@
 package org.filatov.crmapp.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.filatov.crmapp.domain.Client;
 import org.filatov.crmapp.domain.Task;
 import org.filatov.crmapp.service.DBService;
 import org.springframework.web.bind.annotation.*;
