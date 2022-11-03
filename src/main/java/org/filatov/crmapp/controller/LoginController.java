@@ -2,8 +2,8 @@ package org.filatov.crmapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.filatov.crmapp.configuration.JwtUtil;
+import org.filatov.crmapp.domain.LoginResponse;
 import org.filatov.crmapp.domain.User;
-import org.filatov.crmapp.service.ManagerService;
 import org.filatov.crmapp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +24,25 @@ public class LoginController {
 
     @PostMapping("/login")
     public Mono<ResponseEntity> login(ServerWebExchange serverWebExchange) {
-        return serverWebExchange.getFormData().flatMap(
-                credentials -> service.findByUsername(
-                                credentials.getFirst("username")
-                        ).cast(User.class)
-                        .map(
-                                userDetails -> Objects.equals(
-                                        credentials.getFirst("password"),
-                                        userDetails.getPassword()
+
+
+        return serverWebExchange
+                .getFormData()
+                .flatMap(
+                        credentials -> service.findByUsername(
+                                        credentials.getFirst("username")
+                                ).cast(User.class)
+                                .map(
+                                        userDetails -> Objects.equals(
+                                                credentials.getFirst("password"),
+                                                userDetails.getPassword()
+                                        )
+                                                ? ResponseEntity
+                                                .status(HttpStatus.OK)
+                                                .body(new LoginResponse(jwtUtil.generateToken(userDetails), userDetails.getId()))
+                                                : UNAUTHORIZED
                                 )
-                                        ? ResponseEntity.ok(jwtUtil.generateToken(userDetails))
-                                        : UNAUTHORIZED
-                        )
-                        .defaultIfEmpty(UNAUTHORIZED)
-        );
+                                .defaultIfEmpty(UNAUTHORIZED)
+                );
     }
 }

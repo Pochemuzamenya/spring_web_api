@@ -1,11 +1,9 @@
 package org.filatov.crmapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.filatov.crmapp.domain.view.Views;
 
 import javax.persistence.*;
 
@@ -18,12 +16,16 @@ import javax.persistence.*;
 public class Manager {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.IdName.class)
     private Long id;
 
-    private String name;
+    private String firstname;
+
+    private String lastname;
 
     private String avatarURL;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
 
 }

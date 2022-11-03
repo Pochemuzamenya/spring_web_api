@@ -36,9 +36,6 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Manager manager;
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
