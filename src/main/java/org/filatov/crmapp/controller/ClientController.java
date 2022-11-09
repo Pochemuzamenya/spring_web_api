@@ -1,7 +1,9 @@
 package org.filatov.crmapp.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.filatov.crmapp.domain.Client;
+import org.filatov.crmapp.domain.view.Views;
 import org.filatov.crmapp.service.DBService;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -20,6 +22,7 @@ public class ClientController {
     }
 
     @PostMapping
+    @JsonView(Views.IdName.class)
     public Mono<Client> create(@RequestBody Client client) {
         return service.save(client);
     }

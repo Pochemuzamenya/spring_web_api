@@ -37,7 +37,7 @@ public class Ticket {
     @CreationTimestamp
     private LocalDateTime date = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manager_id")
     private Manager manager;
 

@@ -3,7 +3,7 @@ package org.filatov.crmapp.configuration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.filatov.crmapp.domain.User;
+import org.filatov.crmapp.domain.Manager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public String generateToken(User manager) {
+    public String generateToken(Manager manager) {
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("role", List.of(manager.getRole()));
         // TODO: 24.10.2022 Заменить на нормальные даты

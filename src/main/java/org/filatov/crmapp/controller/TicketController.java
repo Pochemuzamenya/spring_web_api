@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("/api/ticket")
 @RestController
-@CrossOrigin
 public class TicketController {
 
     private final DBService<Ticket> service;

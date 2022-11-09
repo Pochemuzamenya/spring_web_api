@@ -3,8 +3,8 @@ package org.filatov.crmapp.controller;
 import lombok.RequiredArgsConstructor;
 import org.filatov.crmapp.configuration.JwtUtil;
 import org.filatov.crmapp.domain.LoginResponse;
-import org.filatov.crmapp.domain.User;
-import org.filatov.crmapp.service.UserService;
+import org.filatov.crmapp.domain.Manager;
+import org.filatov.crmapp.service.ManagerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final UserService service;
+    private final ManagerService service;
     private final JwtUtil jwtUtil;
     private final static ResponseEntity<Object> UNAUTHORIZED = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
@@ -31,7 +31,7 @@ public class LoginController {
                 .flatMap(
                         credentials -> service.findByUsername(
                                         credentials.getFirst("username")
-                                ).cast(User.class)
+                                ).cast(Manager.class)
                                 .map(
                                         userDetails -> Objects.equals(
                                                 credentials.getFirst("password"),
@@ -39,7 +39,7 @@ public class LoginController {
                                         )
                                                 ? ResponseEntity
                                                 .status(HttpStatus.OK)
-                                                .body(new LoginResponse(jwtUtil.generateToken(userDetails), userDetails.getId()))
+                                                .body(new LoginResponse(jwtUtil.generateToken(userDetails), userDetails))
                                                 : UNAUTHORIZED
                                 )
                                 .defaultIfEmpty(UNAUTHORIZED)
